@@ -1,6 +1,6 @@
 # Equalheights
 
-A jquery plugin for making elements equal heights.
+A simple jquery plugin for making elements equal heights.
 
 # Example 
 
