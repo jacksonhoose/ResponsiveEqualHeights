@@ -23,10 +23,10 @@ if (typeof Object.create !== 'function') {
       self.options = $.extend({}, $.fn.equalHeights.options, options);
       self.userOptions = options;
 
-      self.$parent = el;
-      self.$children = self.$parent.find(options.target);
+      self.$parent = $(el);
+      self.$children = self.$parent.find(self.options.target);
 
-      self.debounceEnabled = (typeof _.debounce === 'function') ? true : false;
+      self.debounceEnabled = (typeof _ === 'function' && typeof _.debounce === 'function') ? true : false;
 
       self.start();
 
@@ -42,24 +42,23 @@ if (typeof Object.create !== 'function') {
     },
     makeEqualHeights: function() {
       var self = this;
-      
+
       self.$children.css('height', 'auto');
       self.$children.css('height', self.filterTallest());
+
     },
     start: function() {
       var self = this;
+      var equalHeightsFunction = function() {
+        self.makeEqualHeights();
+      };
 
       $(window).on({
-        load: self.resize,
-        resize: self.debounceEnabled === true ? _.debounce(self.makeEqualHeights, self.options.debounce) : self.makeEqualHeights
+        load: equalHeightsFunction,
+        resize: self.debounceEnabled === true ? _.debounce(equalHeightsFunction, self.options.debounce) : equalHeightsFunction
       });
 
     }
-  };
-
-  $.fn.equalHeights.options = {
-    debounce: 150,
-    target: ''
   };
 
   // Collection method.
@@ -74,6 +73,11 @@ if (typeof Object.create !== 'function') {
       equalHeights.init(options, this);
 
     });
+  };
+
+  $.fn.equalHeights.options = {
+    debounce: 150,
+    target: ''
   };
   
 }(jQuery));
