@@ -16,10 +16,12 @@ if (typeof Object.create !== 'function') {
       var self = this;
 
       self.options = $.extend({}, $.fn.equalHeights.options, options);
+      
       self.userOptions = options;
 
       self.$parent = $(el);
-      self.$children = self.$parent.find(self.options.target);
+
+      self.$children = self.options.target.length > 1 ? self.$parent.find(self.options.target) : self.$parent.children();
 
       self.debounceEnabled = (typeof _ === 'function' && typeof _.debounce === 'function') ? true : false;
 
@@ -59,12 +61,8 @@ if (typeof Object.create !== 'function') {
   // Collection method.
   $.fn.equalHeights = function(options) {
     return this.each(function() {
-      
-      if(options.target.length < 1) {
-        return;
-      }
-
       var equalHeights = Object.create(EqualHeights);
+     
       equalHeights.init(options, this);
 
     });

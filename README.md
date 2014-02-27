@@ -12,8 +12,8 @@ In your web page:
 <script>
 	jQuery(function($) {
 		$('#parent').equalHeights({
-			target: '.child-selector', // a child element
-			debounce: 300 // if underscore is on the page you can specify the debounce rate
+			target: '.child-selector', // specify a child selector.  default is immediate jquery.children()
+			debounce: 666 // if underscore is on the page you can specify the debounce rate - http://underscorejs.org/#debounce
 		});
 	});
 </script>
