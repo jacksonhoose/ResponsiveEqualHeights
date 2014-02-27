@@ -1,4 +1,4 @@
-/*! Equalheights - v0.1.0 - 2014-02-26
+/*! Equalheights - v0.1.0 - 2014-02-27
 * https://github.com/jacksonhoose/equalheights
 * Copyright (c) 2014 Jackson Hoose; Licensed MIT */
 if (typeof Object.create !== 'function') {
@@ -13,46 +13,37 @@ if (typeof Object.create !== 'function') {
 
   var EqualHeights = {
     init: function(options, el) {
-      var self = this;
 
-      self.options = $.extend({}, $.fn.equalHeights.options, options);
+      this.options = $.extend({}, $.fn.equalHeights.options, options);
       
-      self.userOptions = options;
+      this.userOptions = options;
 
-      self.$parent = $(el);
+      this.$parent = $(el);
 
-      self.$children = self.options.target.length > 1 ? self.$parent.find(self.options.target) : self.$parent.children();
+      this.$children = this.options.target.length > 1 ? this.$parent.find(this.options.target) : this.$parent.children();
 
-      self.debounceEnabled = (typeof _ === 'function' && typeof _.debounce === 'function') ? true : false;
+      this.debounceEnabled = (typeof _ === 'function' && typeof _.debounce === 'function') ? true : false;
 
-      self.start();
+      this.makeEqualHeights = this.makeEqualHeights.bind(this);
+
+      this.start();
 
     },
     filterTallest: function() {
-      var self = this;
-      
-      var heights = self.$children.map(function() {
+      var heights = this.$children.map(function() {
         return $(this).outerHeight();
       }).get();
 
       return Math.max.apply(null, heights);
     },
     makeEqualHeights: function() {
-      var self = this;
-
-      self.$children.css('height', 'auto');
-      self.$children.css('height', self.filterTallest());
-
+      this.$children.css('height', 'auto');
+      this.$children.css('height', this.filterTallest());
     },
     start: function() {
-      var self = this;
-      var equalHeightsFunction = function() {
-        self.makeEqualHeights();
-      };
-
       $(window).on({
-        load: equalHeightsFunction,
-        resize: self.debounceEnabled === true ? _.debounce(equalHeightsFunction, self.options.debounce) : equalHeightsFunction
+        load: this.makeEqualHeights,
+        resize: this.debounceEnabled === true ? _.debounce(this.makeEqualHeights, this.options.debounce) : this.makeEqualHeights
       });
 
     }
