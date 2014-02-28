@@ -6,65 +6,64 @@
  * Licensed under the MIT license.
  */
 if (typeof Object.create !== 'function') {
-	Object.create = function (obj) {
-		function F() {}
-		F.prototype = obj;
-		return new F();
-	};
+  Object.create = function (obj) {
+    function F() {}
+    F.prototype = obj;
+    return new F();
+  };
 }
 
 (function($) {
 
-	var EqualHeights = {
-		init: function(options, el) {
-			var _ = (typeof _ === 'function') ? _ : false;
+  var EqualHeights = {
+    init: function(options, el) {
 
-			this.options = $.extend({}, $.fn.equalHeights.options, options);
-			
-			this.$parent = $(el);
+      this.options = $.extend({}, $.fn.equalHeights.options, options);
+      
+      this.$parent = $(el);
 
-			this.$children = this.options.target.length > 1 ? this.$parent.find(this.options.target) : this.$parent.children();
+      this.$children = this.options.target.length > 1 ? this.$parent.find(this.options.target) : this.$parent.children();
 
-			this.debounceEnabled = (typeof _.debounce === 'function') ? true : false;
+      this.debounceEnabled = (typeof _ === 'function' && typeof _.debounce === 'function') ? true : false;
 
-			this.makeEqualHeights = this.makeEqualHeights.bind(this);
+      this.makeEqualHeights = this.makeEqualHeights.bind(this);
 
-			this.start();
+      this.start();
 
-		},
-		filterTallest: function() {
-			var heights = this.$children.map(function() {
-				return $(this).outerHeight();
-			}).get();
+    },
+    filterTallest: function() {
+      var heights = this.$children.map(function() {
+        return $(this).outerHeight();
+      }).get();
 
-			return Math.max.apply(null, heights);
-		},
-		makeEqualHeights: function() {
-			this.$children.css('height', 'auto');
-			this.$children.css('height', this.filterTallest());
-		},
-		start: function() {
-			$(window).on({
-				load: this.makeEqualHeights,
-				resize: this.debounceEnabled === true ? _.debounce(this.makeEqualHeights, this.options.debounce) : this.makeEqualHeights
-			});
+      return Math.max.apply(null, heights);
+    },
+    makeEqualHeights: function() {
+      this.$children.css('height', 'auto');
+      this.$children.css('height', this.filterTallest());
+    },
+    start: function() {
+      $(window).on({
+        load: this.makeEqualHeights,
+        resize: this.debounceEnabled === true ? _.debounce(this.makeEqualHeights, this.options.debounce) : this.makeEqualHeights
+      });
 
-		}
-	};
+    }
+  };
 
-	// Collection method.
-	$.fn.equalHeights = function(options) {
-		return this.each(function() {
-			var equalHeights = Object.create(EqualHeights);
-		 
-			equalHeights.init(options, this);
+  // Collection method.
+  $.fn.equalHeights = function(options) {
+    return this.each(function() {
+      var equalHeights = Object.create(EqualHeights);
+     
+      equalHeights.init(options, this);
 
-		});
-	};
+    });
+  };
 
-	$.fn.equalHeights.options = {
-		debounce: 150,
-		target: ''
-	};
-	
+  $.fn.equalHeights.options = {
+    debounce: 150,
+    target: ''
+  };
+  
 }(jQuery));
