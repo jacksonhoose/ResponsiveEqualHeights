@@ -58,8 +58,7 @@ if (typeof Object.create !== 'function') {
   };
 
   $.fn.equalHeights.options = {
-    debounce: 150,
-    target: ''
+    debounce: 125,
   };
   
 }(jQuery));
