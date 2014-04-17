@@ -29,12 +29,12 @@ if (typeof Object.create !== 'function') {
 
       this.equalize = this.equalize.bind(this);
       
-      this.checkBreakpoints();
-      
       this.start();
 
     },
+    
     breakpoints: [],
+
     breakpointParse: {
       '>': function(size) {
         return $(window).width() > size ? true : false;
@@ -49,6 +49,7 @@ if (typeof Object.create !== 'function') {
         return $(window).width() <= size ? true : false;
       }
     },
+    
     filterTallest: function() {
       var heights = this.$children.map(function() {
         return $(this).outerHeight();
@@ -56,6 +57,7 @@ if (typeof Object.create !== 'function') {
 
       return Math.max.apply(null, heights);
     },
+
     checkBreakpoints: function() {
       if(this.breakpoints.length >= 1) {
         var responses = [];
@@ -68,6 +70,7 @@ if (typeof Object.create !== 'function') {
         return $.inArray(true, responses) === 1 ? true : false;
       }
     },
+
     equalize: function() {
       if(this.checkBreakpoints() === false) {
         this.destoryEqualheights();
@@ -75,13 +78,16 @@ if (typeof Object.create !== 'function') {
       }
       this.makeEqualHeights();
     },
+
     destoryEqualheights: function() {
       this.$children.css('height', 'auto');
     },
+
     makeEqualHeights: function() {
       this.destoryEqualheights();
       this.$children.css('height', this.filterTallest());
     },
+
     start: function() {
       $(window).on({
         load: this.equalize,

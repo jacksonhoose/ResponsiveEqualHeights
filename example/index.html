@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+			<meta charset="utf-8">
+			<meta http-equiv="X-UA-Compatible" content="IE=edge">
+			<title>Example</title>
+			<meta name="description" content="">
+			<meta name="viewport" content="width=device-width, initial-scale=1">
+
+			<style>
+			*, *:before, *:after {
+				-mox-box-sizing:border-box;
+				-webkit-box-sizing:border-box;
+				box-sizing:border-box;
+			}
+			#parent {
+				margin:0 auto;
+				max-width:1400px;
+			}
+			.child {
+				width:25%;
+				background:yellow;
+				color:#555;
+				float:left;
+				margin-right:5%;
+				margin-bottom:20px;
+				padding:1%;
+			}
+			body{ 
+				padding:2em;
+			}
+			</style>
+
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+
+        <div id="parent">
+            
+            <div class="child"><p>a type specimve centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software l</p></div>
+            
+            <div class="child"><p>a types, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software l</p></div>
+            
+            <div class="child"><p>a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchaopularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software l</p></div>
+            
+            <div class="child"><p>a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software l</p></div>
+            
+            <div class="child"><p>a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software l</p><p>a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unche recently with desktop publishing software l</p><p>a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software l</p></div>
+				
+				<div class="child"><p>a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. Itthe 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software l</p><p>a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software l</p></div>
+
+        </div>
+
+        <!-- Add your site or application content here -->
+
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script src="../dist/EqualHeights.min.js"></script>
+
+        <script>
+        $('#parent').equalHeights({
+            target: '.child',
+            debounce: 999,
+            breakpoints: ['> 768', '< 500']
+        });
+        </script>
+
+    </body>
+</html>
