@@ -1,10 +1,7 @@
-/*
- * EqualHeights
- * https://github.com/jacksonhoose/equalheights
- *
- * Copyright (c) 2014 Jackson Hoose
- * Licensed under the MIT license.
- */
+
+/*! Equalheights - v0.1.0 - 2014-02-28
+* https://github.com/jacksonhoose/equalheights
+* Copyright (c) 2014 Jackson Hoose; Licensed MIT */
 if (typeof Object.create !== 'function') {
   Object.create = function (obj) {
     function F() {}
@@ -24,12 +21,33 @@ if (typeof Object.create !== 'function') {
 
       this.$children = this.options.target.length > 1 ? this.$parent.find(this.options.target) : this.$parent.children();
 
-      this.debounceEnabled = (typeof _ === 'function' && typeof _.debounce === 'function') ? true : false;
+      this.breakpoints = this.options.breakpoints;
+      
+      this.debounceEnabled = (typeof window._ === 'function' && typeof window._.debounce === 'function') ? true : false;
 
       this.makeEqualHeights = this.makeEqualHeights.bind(this);
 
+      this.equalize = this.equalize.bind(this);
+      
+      this.checkBreakpoints();
+      
       this.start();
 
+    },
+    breakpoints: [],
+    breakpointParse: {
+      '>': function(size) {
+        return $(window).width() > size ? true : false;
+      },
+      '<': function(size) {
+        return $(window).width() < size ? true : false;
+      },
+      '>=': function(size) {
+        return $(window).width() >= size ? true : false;
+      },
+      '<=': function(size) {
+        return $(window).width() <= size ? true : false;
+      }
     },
     filterTallest: function() {
       var heights = this.$children.map(function() {
@@ -38,16 +56,37 @@ if (typeof Object.create !== 'function') {
 
       return Math.max.apply(null, heights);
     },
-    makeEqualHeights: function() {
+    checkBreakpoints: function() {
+      if(this.breakpoints.length >= 1) {
+        var responses = [];
+        for (var i = this.breakpoints.length - 1; i >= 0; i--) {
+          var query = this.breakpoints[i].split(' ');
+          if(typeof this.breakpointParse[query[0]] === 'function') {
+            responses.push(this.breakpointParse[query[0]](parseInt(query[1], 10)));
+          }
+        }
+        return $.inArray(true, responses) === 1 ? true : false;
+      }
+    },
+    equalize: function() {
+      if(this.checkBreakpoints() === false) {
+        this.destoryEqualheights();
+        return;
+      }
+      this.makeEqualHeights();
+    },
+    destoryEqualheights: function() {
       this.$children.css('height', 'auto');
+    },
+    makeEqualHeights: function() {
+      this.destoryEqualheights();
       this.$children.css('height', this.filterTallest());
     },
     start: function() {
       $(window).on({
-        load: this.makeEqualHeights,
-        resize: this.debounceEnabled === true ? _.debounce(this.makeEqualHeights, this.options.debounce) : this.makeEqualHeights
+        load: this.equalize,
+        resize: this.debounceEnabled === true ? window._.debounce(this.equalize, this.options.debounce) : this.equalize
       });
-
     }
   };
 
@@ -62,7 +101,8 @@ if (typeof Object.create !== 'function') {
   };
 
   $.fn.equalHeights.options = {
-    debounce: 125,
+    debounce: 500,
+    breakpoints: []
   };
   
 }(jQuery));
