@@ -72,7 +72,10 @@
 	        $('#parent').equalHeights({
 	            target: '.child',
 	            debounce: 500,
-	            breakpoints: ['> 768', '< 500']
+	            breakpoints: ['> 768', '< 500'],
+	            afterEqualize: function() {
+	            	console.log('My target has been resized!!!');
+	            }
 	        });
         </script>
 

@@ -21,8 +21,6 @@ if (typeof Object.create !== 'function') {
 
       this.$children = this.options.target.length > 1 ? this.$parent.find(this.options.target) : this.$parent.children();
 
-      this.breakpoints = this.options.breakpoints;
-      
       this.debounceEnabled = (typeof window._ === 'function' && typeof window._.debounce === 'function') ? true : false;
 
       this.makeEqualHeights = this.makeEqualHeights.bind(this);
@@ -33,8 +31,6 @@ if (typeof Object.create !== 'function') {
 
     },
     
-    breakpoints: [],
-
     breakpointParse: {
       '>': function(size) {
         return $(window).width() > size ? true : false;
@@ -59,10 +55,10 @@ if (typeof Object.create !== 'function') {
     },
 
     checkBreakpoints: function() {
-      if(this.breakpoints.length >= 1) {
+      if(this.options.breakpoints.length) {
         var responses = [];
-        for (var i = this.breakpoints.length - 1; i >= 0; i--) {
-          var query = this.breakpoints[i].split(' ');
+        for (var i = this.options.breakpoints.length - 1; i >= 0; i--) {
+          var query = this.options.breakpoints[i].split(' ');
           if(typeof this.breakpointParse[query[0]] === 'function') {
             responses.push(this.breakpointParse[query[0]](parseInt(query[1], 10)));
           }
@@ -87,6 +83,9 @@ if (typeof Object.create !== 'function') {
       this.destoryEqualheights();
       if(this.$children.height() !== 0) {
         this.$children.css('height', this.filterTallest());
+        if(this.options.afterEqualize && typeof this.options.afterEqualize === 'function') {
+          this.options.afterEqualize();
+        }
       }
     },
 
@@ -110,7 +109,8 @@ if (typeof Object.create !== 'function') {
 
   $.fn.equalHeights.options = {
     debounce: 125,
-    breakpoints: []
+    breakpoints: [],
+    afterResize: $.noop
   };
   
 }(jQuery));
