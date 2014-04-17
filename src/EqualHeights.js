@@ -107,7 +107,7 @@ if (typeof Object.create !== 'function') {
   };
 
   $.fn.equalHeights.options = {
-    debounce: 500,
+    debounce: 125,
     breakpoints: []
   };
   
