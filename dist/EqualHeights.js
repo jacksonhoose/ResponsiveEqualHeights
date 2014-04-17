@@ -52,7 +52,7 @@ if (typeof Object.create !== 'function') {
         return $(window).width() <= size ? true : false;
       }
     },
-    
+
     filterTallest: function() {
       var heights = this.$children.map(function() {
         return $(this).outerHeight();
@@ -70,7 +70,7 @@ if (typeof Object.create !== 'function') {
             responses.push(this.breakpointParse[query[0]](parseInt(query[1], 10)));
           }
         }
-        return $.inArray(true, responses) === 1 ? true : false;
+        return $.inArray(true, responses) !== -1 ? true : false;
       }
     },
 
