@@ -88,7 +88,9 @@ if (typeof Object.create !== 'function') {
 
     makeEqualHeights: function() {
       this.destoryEqualheights();
-      this.$children.css('height', this.filterTallest());
+      if(this.$children.height() !== 0) {
+        this.$children.css('height', this.filterTallest());
+      }
     },
 
     start: function() {
